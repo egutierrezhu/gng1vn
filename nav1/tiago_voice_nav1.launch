@@ -1,0 +1,12 @@
+<launch>
+
+  <node name="gng_recognizer" pkg="gng1vn" type="gng_recognizer.py">
+    <param name="som1" value="$(find gng1vn)/nodes/maps/nodes_cmd_6words.npy"/>
+    <param name="test" value="$(find gng1vn)/nodes/test_files/test.wav"/>
+  </node>
+
+  <node name="voice_cmd_vel" pkg="gng1vn" type="voice_cmd_vel.py" output="screen">
+    <remap from="cmd_vel" to="/mobile_base_controller/cmd_vel"/>
+  </node>
+
+</launch>
