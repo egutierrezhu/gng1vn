@@ -3,7 +3,6 @@ import numpy as np
 import scipy.io.wavfile as wav
 
 from features import mfcc
-from numpy import linalg as LA
 
 class Node():
 
@@ -33,11 +32,6 @@ class TestingNetwork:
 
 
         self.node_list = node_list
-        self.labels = []
-        self._count = []
-
-        # online cumulative mistake rate
-        self.error_count = 0
 
     def _distance(self, v1, v2):
 
@@ -61,14 +55,13 @@ class TestingNetwork:
             if dist < menor_dist:
                 menor_dist = dist
                 label = int(node.label)
-                best_node = node
 
         return label
 
-def testInit(filename_som1):
+def testInit(filename_map1):
 	#Setup Neural Network
-        fsom = open(filename_som1, "rb")
-	node_list  = np.load(fsom)
+        fmap = open(filename_map1, "rb")
+	node_list  = np.load(fmap)
 	testNet = TestingNetwork(node_list)
 	return testNet
 
@@ -76,8 +69,8 @@ def extractFeature(soundfile):
 	#Get MFCC Feature Array
 	(rate,sig) = wav.read(soundfile)
 	duration = len(sig)/rate;	
-	mfcc_feat = mfcc(sig,rate,winlen=duration/20,winstep=duration/20)
-	s = mfcc_feat[:20]
+	mfcc_feat = mfcc(sig,rate,winlen=duration/40,winstep=duration/100)
+	s = mfcc_feat[:98]
 	st = []
 	for elem in s:
 		st.extend(elem)
@@ -90,7 +83,6 @@ def feedToNetwork(words,inputArray,testNet):
 	outputLabel = testNet.test_single(inputArray[0])
 
         # Label to index word
-
         indexMax = outputLabel-1
 			
 	# Mapping each index to their corresponding meaning
@@ -101,12 +93,12 @@ if __name__ == "__main__":
 
         words = ['backward','forward','go','left','right','stop']
 
-        filename_som1 = "maps/nodes_cmd_6words.npy"
+        filename_map1 = "maps/nodes_cmd_6words.npy"
         filename_test = "test_files/test.wav"
 
         print ("Testing SGNG: " + filename_test)
         
-        testNet = testInit(filename_som1)
+        testNet = testInit(filename_map1)
 
         inputArray = extractFeature(filename_test)      
         

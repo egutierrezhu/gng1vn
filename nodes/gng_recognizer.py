@@ -25,12 +25,12 @@ import scipy.io.wavfile as wav
 
 def gng_recognizer():
     pub = rospy.Publisher('chatter', String, queue_size=10)
-    rospy.init_node('som_recognizer', anonymous=True)
+    rospy.init_node('gng_recognizer', anonymous=True)
     rate = rospy.Rate(10) # 10hz
 
     words = ['backward','forward','go','left','right','stop']
            
-    filename_som1 = rospy.get_param("~som1")
+    filename_map1 = rospy.get_param("~gng1")
     filename_test = rospy.get_param("~test")
 
     while not rospy.is_shutdown():
@@ -39,8 +39,8 @@ def gng_recognizer():
         # Record to file
         record_to_file(filename_test)
 
-        # Feed into SOM      
-        testNet = testInit(filename_som1)
+        # Feed into map      
+        testNet = testInit(filename_map1)
         inputArray = extractFeature(filename_test)            
         outStr = feedToNetwork(words,inputArray,testNet)
 
