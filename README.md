@@ -1,6 +1,6 @@
-# Command Voice Recognition for TIAGo Robot Using MFCC and GNG
+# Command Voice Recognition for TIAGo Robot Using MFCC and SGNG
 
-Assisted navigation is proposed for the PAL-Robotics TIAGo robot, ROS-Kinetic distribution, based on command voice recognition. An implementation of isolated word recognition using online incremental supervised Growing Neural Gas (GNG) and voice feature extractor (MFCC).
+Assisted navigation is proposed for the PAL-Robotics TIAGo robot, ROS-Kinetic distribution, based on command voice recognition. An implementation of isolated word recognition using online incremental Supervised Growing Neural Gas (oiSGNG) and voice feature extractor (MFCC).
 
 Words Recognized:
 
